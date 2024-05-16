@@ -1,8 +1,9 @@
+package Examples;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class TryCatchExample {
-
+public class TryCatch {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -17,13 +18,20 @@ public class TryCatchExample {
             y = sc.nextInt();
             sc.nextLine();
 
-            int result = x/y;
+            int result = x / y;
             System.out.println("Division result: " + result);
-        } catch (ArithmeticException e) {
-            System.out.println("You can't divide by 0");
-            e.printStackTrace();
-        } catch (InputMismatchException e) {
-            System.out.println("Text is not number lol");
+
+
+
+//        } catch (ArithmeticException e) {
+//            System.out.println("Cannot divide by 0");
+//            e.printStackTrace();
+//        } catch (InputMismatchException e) {
+//            System.out.println("String cannot be parsed to number");
+//            e.printStackTrace();
+//        }
+        } catch (ArithmeticException | InputMismatchException e) {
+            System.out.println("Invalid Input");
             e.printStackTrace();
         }
     }

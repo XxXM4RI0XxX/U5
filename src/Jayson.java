@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
+//Al inicio se tienen que importar google.code.gson en la libreria.
+// File -> Project Structure -> Libraries -> + -> From Maven... -> google.code.gson -> Ok -> Apply
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,14 +11,14 @@ public class Jayson {
 
     public static void main(String[] args) {
 
-        HashMap<String, List<?>> uwu = createHashMap();
+        HashMap<String, List<?>> uwu = createHashMap(); // List<?>; Admite List con cualquier tipo de dato.
 
-        Gson json = new GsonBuilder().setPrettyPrinting().create();
-        //Gson json=new Gson();
+        Gson json = new GsonBuilder().setPrettyPrinting().create(); //Con esta sintaxis se crea el archivo .json con un formato acomodado por columnas.
+        //Gson json=new Gson(); con esta se crea el archivo .json sin formato
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Doc.json"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Doc.json")); //Aqui se crea automaticamente el nuevo archivo .json
             json.toJson(uwu,writer);
-            writer.close();
+            writer.close();//Siempre se tiene que cerrar el writer despues de utilizarlo.
         }catch (IOException e){
             System.out.println(e);
         }catch (Exception e){
