@@ -1,21 +1,6 @@
 package BankAccount;
 
-public class ThrowsExceptionExercise {
-
-    public static void main(String[] args) {
-        BankAccount acc1 = new BankAccount(1000);
-
-        acc1.deposit(500);
-        acc1.withdraw(1000);
-        acc1.withdraw(1000);
-        acc1.deposit(300);
-
-        System.out.println(acc1);
-    }
-
-}
-
-class BankAccount{
+public class BankAccount{
 
     double balance;
 
@@ -44,4 +29,3 @@ class BankAccount{
         return "Balance: $"+balance;
     }
 }
-

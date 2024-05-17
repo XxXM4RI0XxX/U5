@@ -3,6 +3,11 @@ package Examples;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+/*
+    Toda exepción que herede de Exeption esta obligada a ser manejada ya sea declarandolas, con try catch, etc.
+    Toda exepcion que herede de RunTimeExeption puede ser no manejada
+ */
+
 public class CheckedUnchecked {
     public static void main(String[] args) {
         try {

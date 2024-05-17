@@ -1,3 +1,6 @@
+//programing.guide/java/list-of-java-exceptions.html
+//Todas las exepciones que tiene el JDK de java
+
 package Examples;
 
 import java.util.InputMismatchException;
