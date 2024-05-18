@@ -37,6 +37,7 @@ public class ThrowsExceptionExerciseMain {
             }else flag=false;
         }while (flag);
 
+        //uwu
     }
 
 }
