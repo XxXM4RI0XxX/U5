@@ -1,5 +1,8 @@
 package BankAccount;
 
+import BankAccount.CustomExeptions.InsufficientFundsException;
+import BankAccount.CustomExeptions.NoNegativeOperationException;
+
 public class BankAccount{
 
     double balance;
@@ -8,20 +11,22 @@ public class BankAccount{
         this.balance = balance;
     }
 
-    public void deposit(double amount){
+    public void deposit(double amount) throws NoNegativeOperationException {
         if(amount<0){
-            throw new IllegalArgumentException(">>>Invalid deposit...");
+            throw new NoNegativeOperationException();
         }
         balance+=amount;
-        System.out.println("Succesfully deposit $"+amount);
+        System.out.println(">>> Successfully deposit $"+amount);
     }
 
-    public void withdraw (double amount) {
-            if (amount>balance||amount<0) {
-                throw new IllegalArgumentException(">>>Invalid withdraw");
+    public void withdraw (double amount) throws InsufficientFundsException, NoNegativeOperationException {
+            if (amount>balance) {
+                throw new InsufficientFundsException();
+            } else if (amount<0) {
+                throw new NoNegativeOperationException();
             }
-            balance-=amount;
-        System.out.println("Successfully withdrawed $"+amount);
+        balance-=amount;
+        System.out.println(">>> Successfully withdraw $"+amount);
     }
 
     @Override
