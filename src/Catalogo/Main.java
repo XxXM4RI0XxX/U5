@@ -17,7 +17,7 @@ public class Main {
         do {
         try {
 
-                System.out.println("\t>>>MENÚ<<<\n1) Añadir prodcuto\n2) Buscar prodcuto\n3) Remover producto\n0) Salir");
+                System.out.println("\t>>>MENU<<<\n1) Agregar prodcuto\n2) Buscar prodcuto\n3) Remover producto\n0) Salir");
                 int opt = ConsoleReader.readInt();
 
                 if (opt != 0) {

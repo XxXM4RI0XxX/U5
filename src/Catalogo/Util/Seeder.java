@@ -1,26 +1,61 @@
 package Catalogo.Util;
 
 import Catalogo.Catalog;
-import Catalogo.CustomExceptions.BlankSpaceDetected;
-import Catalogo.CustomExceptions.NegativeInputDetected;
-import Catalogo.CustomExceptions.ProductNotFound;
+import Catalogo.CustomExceptions.*;
 import Catalogo.Product;
-
-import java.util.ArrayList;
+import java.io.*;
 import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Seeder {
+
+
+    public static void genProducts(){
+
+        TextManager.writeFile("seeder.csv","""
+                        1,Cloro,32.5,Limpieza hogar blanquea
+                        2,Pinol,25,limpieza hogar desinfectante
+                        3,Galleta,20,alimentos harina azucar
+                        4,Tofu,500,alimentos vegetariano cocina
+                        5,Licuadora,200,electrodomestico hogar cocina
+                        6,Ventilador,300,electrodomestico hogar sala
+                        7,Bocina,234.1,hogar musica electronico
+                        8,Telefono,100.5,electronica personal comunicacion
+                        9,Cartera,150,personal dinero accesorios
+                        10,Lapicero,7,escuela util oficina
+                        11,Engrapadora,47.4,oficina util
+                        12,Aretes,29.23,personal accesorios ropa
+                        13,Bistek,240,alimentos carne cocina
+                        14,Cuchillo,37.5,cocina defensa arma
+                        15,Pistola,734.12,arma personal defensa
+                        """);
+
+        try (
+                BufferedReader reader = new BufferedReader(new FileReader("seeder.csv"))
+        ){
+            String line;
+            while ((line = reader.readLine())!= null){
+
+                String[] product = line.split(",");
+
+                Catalog.addProduct(new Product(Integer.parseInt(product[0]),product[1],Double.parseDouble(product[2]),product[3]));
+            }
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 
     public static HashMap<Integer,Menu> getMenus(){
 
         HashMap<Integer,Menu> menus = new HashMap<>();
 
+
+
         menus.put(1, () -> { //Añadir producto
 
 
-                System.out.println("<<<Añadiendo producto>>>");
+                System.out.println("<<<Agregando producto>>>");
 
                 try {
                     System.out.print("Nombre: ");
@@ -39,10 +74,10 @@ public class Seeder {
                         throw new BlankSpaceDetected();
                     }
 
-                    Product product = new Product(Catalog.getProductsSize() + 1, name, price, description);
+                    Product product = new Product(Catalog.getProducts().getLast().getId()+1, name, price, description);
 
                     Catalog.addProduct(product);
-                    System.out.println("> Producto añadido existosamente");
+                    System.out.println("> Producto agregado existosamente");
                 }catch (NegativeInputDetected | BlankSpaceDetected _){}
 
         });
@@ -52,28 +87,27 @@ public class Seeder {
             HashMap<Integer,Menu> subMenu = new HashMap<>();
 
             subMenu.put(1, () -> {
-                
+
                 System.out.print("ID del producto: ");
                 int id = ConsoleReader.readInt();
                 Product product = Catalog.findById(id);
-                product.printProduct();;
+                product.printProduct();
 
             });
             subMenu.put(2, () ->{
-                
+
                     System.out.print("Nombre del producto: ");
                     String name = ConsoleReader.readString(0);
                     Product product = Catalog.findByName(name);
-                    System.out.printf("%2s%-2s|%8s%-8s|%10s%-10s|%s\n","I","D","Nom","bre","Pre","cio","Descripci�n");
+                    System.out.printf("%2s%-2s|%8s%-8s|%10s%-10s|%s\n","I","D","Nom","bre","Pre","cio","Descripcion");
                     product.printProduct();
-                ;
             });
             subMenu.put(3, () ->{
-               
+
                    System.out.print("Descripcion del producto: ");
                    String desc = ConsoleReader.readString(0);
                    Product[] products = Catalog.searchByDescription(desc);
-                   System.out.printf("%2s%-2s|%8s%-8s|%10s%-10s|%s\n","I","D","Nom","bre","Pre","cio","Descripci�n");
+                   System.out.printf("%2s%-2s|%8s%-8s|%10s%-10s|%s\n","I","D","Nom","bre","Pre","cio","Descripcion");
                    for(Product product : products){
                        product.printProduct();
                    }
@@ -81,7 +115,7 @@ public class Seeder {
             });
             subMenu.put(4, () -> {
                 System.out.println("Mostrando productos...");
-                System.out.printf("%2s%-2s|%8s%-8s|%4s%-4s|%s\n","I","D","Nom","bre","Pre","cio","Descripci�n");
+                System.out.printf("%2s%-2s|%8s%-8s|%4s%-4s|%s\n","I","D","Nom","bre","Pre","cio","Descripcion");
                 Catalog.showAllProducts();
             });
 
@@ -105,60 +139,16 @@ public class Seeder {
 
                 System.out.println("<<<Quitando producto>>>");
                 System.out.println("Elija el ID del producto a remover...");
-                System.out.printf("%2s%-2s|%8s%-8s|%10s%-10s|%s\n", "I", "D", "Nom", "bre", "Pre", "cio", "Descripci�n");
+                System.out.printf("%2s%-2s|%8s%-8s|%10s%-10s|%s\n", "I", "D", "Nom", "bre", "Pre", "cio", "Descripcion");
                 Catalog.showAllProducts();
                 System.out.print("ID: ");
-                int id = ConsoleReader.readInt() - 1;
+                int id = ConsoleReader.readInt();
                 Catalog.removeProduct(id);
                 System.out.println("> Producto removido exitosamente");
 
         });
 
          return menus;
-    }
-
-    public static void genProducts(){
-
-        Product product = new Product(1,"Cloro",32.5,"limpieza hogar blanquea");
-        Product product1 = new Product(2,"Pinol",25,"limpieza hogar desinfectante");
-        Product product2 = new Product(3,"Galleta",20,"alimentos harina azucar");
-        Product product3 = new Product(4,"Tofu",500,"alimentos vegetariano cocina");
-        Product product4 = new Product(5,"Licuadora",200,"electrodomestico hogar cocina");
-        Product product5 = new Product(6,"Ventilador",300,"electrodomestico hogar sala");
-        Product product6 = new Product(7,"Bocina",234.1,"hogar musica electronico");
-        Product product7 = new Product(8,"Telefono",100.5,"electronica personal comunicacion");
-        Product product8 = new Product(9,"Cartera",150,"personal dinero accesorios");
-        Product product9 = new Product(10, "Lapicero",7,"escuela util oficina");
-        Product product10 = new Product(11,"Engrapadora",47.4,"oficina util");
-        Product product11 = new Product(12,"Aretes",29.23,"personal accesorios ropa");
-        Product product12 = new Product(13,"Bistek",240,"alimentos carne cocina");
-        Product product13 = new Product(14,"Cuchillo",37.5,"cocina defensa arma");
-        Product product14 = new Product(15,"Pistola",734.12,"arma personal defensa");
-
-
-        Catalog.addProduct(product);
-        Catalog.addProduct(product1);
-        Catalog.addProduct(product2);
-        Catalog.addProduct(product3);
-        Catalog.addProduct(product4);
-        Catalog.addProduct(product5);
-        Catalog.addProduct(product6);
-        Catalog.addProduct(product7);
-        Catalog.addProduct(product8);
-        Catalog.addProduct(product9);
-        Catalog.addProduct(product10);
-        Catalog.addProduct(product11);
-        Catalog.addProduct(product12);
-        Catalog.addProduct(product13);
-        Catalog.addProduct(product14);
-
-        // Prueba para llenar automaticamente una lista de productos con nombre indefinido
-//        for (int i = 0; i < 10; i++) {
-//            Product p  =  new Product();
-//            p.generateRandom();
-//
-//            Catalog.addProduct(p);
-//        }
     }
 
 }

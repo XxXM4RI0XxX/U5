@@ -25,7 +25,7 @@ public class Catalog {
         Product findProduct=null;
 
         for (Product product : products){
-            if(product.getName().equals(name))
+            if(product.getName().equalsIgnoreCase(name))
                 findProduct=product;
         }
 
@@ -39,7 +39,7 @@ public class Catalog {
         int pNumber=0;
 
         for(Product product : products){
-            if(product.getDescription().contains(description))
+            if(product.getDescription().toLowerCase().contains(description.toLowerCase()))
                 pNumber++;
         }
 
@@ -70,9 +70,20 @@ public class Catalog {
     
     public static void removeProduct(int id) throws ProductNotFound {
         try {
-            Product product = products.get(id);
-            products.remove(product);
-        }catch (IndexOutOfBoundsException | InputMismatchException _){
+
+            Product remProd=null;
+
+            for(Product product : products){
+                if(product.getId()==id){
+                    remProd=product;
+                }
+            }
+
+            if(remProd!=null)
+            products.remove(remProd);
+            else throw new InputMismatchException();
+
+        }catch (InputMismatchException _){
             if(id>=0)
             throw new ProductNotFound(">>> ID +"+id+" no encontrado");
             else throw new NegativeInputDetected();
@@ -80,8 +91,5 @@ public class Catalog {
     }
 
     //GETTER
-
-    public static int getProductsSize() {
-        return products.size();
-    }
+    public static ArrayList<Product> getProducts(){return products;}
 }
