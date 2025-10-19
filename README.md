@@ -1,0 +1,4 @@
+Cuenta con dos proyectos, los cuales resaltan en el uso de exepciones personalizadas, y uno que otro menú.
+- BankAccount: Cuenta de banco simple, que muestra los fondos actuales, y tiene opciones para retirar o agregar fondos. Tiene dos menús, y exepciones personalizadas.
+- Catalogo: Es un pequeño catalogo de productos, con interfaz muy simple. Permite agregar, buscar y eliminar productos durante la ejecución. Cuenta con un TextManager el cual permite leer un archivo.csv, que llena el catálogo antes de la ejecución mediante un Seeder. {Si mejoro este, maybe podría separarlo y juntarlo con los proyectos}
+- Tambien tiene un archivo para escribir sobre un achivo.json mediante Gson Builder de google (incluye el como importar la libreria Gson desde Maven), y unos ejemplos del manejo de exepciones.
